@@ -1,5 +1,11 @@
 # slate-react
 
+## 0.70.1
+
+### Patch Changes
+
+- [#4650](https://github.com/ianstormtaylor/slate/pull/4650) [`b6643132`](https://github.com/ianstormtaylor/slate/commit/b6643132f1f3b64f019a601ee2f44a521c122ad3) Thanks [@e1himself](https://github.com/e1himself)! - Do not disable Grammarly extension in Slate editors
+
 ## 0.70.0
 
 ### Patch Changes
