@@ -21,12 +21,12 @@ import { DIRTY_PATHS, DIRTY_PATH_KEYS, FLUSHING } from './utils/weak-maps'
 
 export const createEditor = (): Editor => {
   const editor: Editor = {
-    children: [],
-    operations: [],
-    selection: null,
-    marks: null,
-    isInline: () => false,
-    isVoid: () => false,
+    children: [], // 孩子节点
+    operations: [], // 操作
+    selection: null, // 选择
+    marks: null, // 包含的 marks 数组
+    isInline: () => false, // 内联
+    isVoid: () => false, // 空结点
     onChange: () => {},
 
     apply: (op: Operation) => {
@@ -110,18 +110,18 @@ export const createEditor = (): Editor => {
         } else {
           const marks = {
             ...(Editor.marks(editor) || {}),
-            [key]: value,
+            [key]: value, // 将 mark 的 key: value 插入到 editor.marks 中去
           }
 
           editor.marks = marks
           if (!FLUSHING.get(editor)) {
-            editor.onChange()
+            editor.onChange() // 手动触发 onChange 事件
           }
         }
       }
     },
 
-    deleteBackward: (unit: 'character' | 'word' | 'line' | 'block') => {
+    deleteBackward: (unit: 'character' | 'word' | 'line' | 'block') => { // 向从后往前删除（从右到左）
       const { selection } = editor
 
       if (selection && Range.isCollapsed(selection)) {
@@ -129,7 +129,7 @@ export const createEditor = (): Editor => {
       }
     },
 
-    deleteForward: (unit: 'character' | 'word' | 'line' | 'block') => {
+    deleteForward: (unit: 'character' | 'word' | 'line' | 'block') => { // 从前往后删除
       const { selection } = editor
 
       if (selection && Range.isCollapsed(selection)) {
@@ -137,7 +137,7 @@ export const createEditor = (): Editor => {
       }
     },
 
-    deleteFragment: (direction?: 'forward' | 'backward') => {
+    deleteFragment: (direction?: 'forward' | 'backward') => { // 删除块
       const { selection } = editor
 
       if (selection && Range.isExpanded(selection)) {
@@ -145,7 +145,7 @@ export const createEditor = (): Editor => {
       }
     },
 
-    getFragment: () => {
+    getFragment: () => { // 获取当前选区的 *fragment 块*
       const { selection } = editor
 
       if (selection) {
@@ -154,8 +154,8 @@ export const createEditor = (): Editor => {
       return []
     },
 
-    insertBreak: () => {
-      Transforms.splitNodes(editor, { always: true })
+    insertBreak: () => { // 插入空行
+      Transforms.splitNodes(editor, { always: true }) // always: 总是执行 op split_node
     },
 
     insertFragment: (fragment: Node[]) => {
