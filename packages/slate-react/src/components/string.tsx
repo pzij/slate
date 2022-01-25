@@ -1,7 +1,8 @@
-import React, { useRef, useLayoutEffect } from 'react'
+import React, { useRef } from 'react'
 import { Editor, Text, Path, Element, Node } from 'slate'
 
 import { ReactEditor, useSlateStatic } from '..'
+import { useIsomorphicLayoutEffect } from '../hooks/use-isomorphic-layout-effect'
 
 /**
  * Leaf content strings.
@@ -60,6 +61,10 @@ const TextString = (props: { text: string; isTrailing?: boolean }) => {
 
   const ref = useRef<HTMLSpanElement>(null)
 
+  const getTextContent = () => {
+    return `${text ?? ''}${isTrailing ? '\n' : ''}`
+  }
+
   // This is the actual text rendering boundary where we interface with the DOM
   // The text is not rendered as part of the virtual DOM, as since we handle basic character insertions natively,
   // updating the DOM is not a one way dataflow anymore. What we need here is not reconciliation and diffing
@@ -69,9 +74,9 @@ const TextString = (props: { text: string; isTrailing?: boolean }) => {
   // eg makes native spellcheck opt out from checking the text node.
 
   // useLayoutEffect: updating our span before browser paint
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     // null coalescing text to make sure we're not outputing "null" as a string in the extreme case it is nullish at runtime
-    const textWithTrailing = `${text ?? ''}${isTrailing ? '\n' : ''}`
+    const textWithTrailing = getTextContent()
 
     if (ref.current && ref.current.textContent !== textWithTrailing) {
       ref.current.textContent = textWithTrailing
@@ -80,6 +85,16 @@ const TextString = (props: { text: string; isTrailing?: boolean }) => {
     // intentionally not specifying dependencies, so that this effect runs on every render
     // as this effectively replaces "specifying the text in the virtual DOM under the <span> below" on each render
   })
+
+  // Render text content immediately if it's the first-time render
+  // Ensure that text content is rendered on server-side rendering
+  if (!ref.current) {
+    return (
+      <span data-slate-string ref={ref}>
+        {getTextContent()}
+      </span>
+    )
+  }
 
   // the span is intentionally same on every render in virtual DOM, actual rendering happens in the layout effect above
   return <span data-slate-string ref={ref} />

@@ -1,5 +1,35 @@
 # slate-react
 
+## 0.72.6
+
+### Patch Changes
+
+- [#4796](https://github.com/ianstormtaylor/slate/pull/4796) [`5d8a1606`](https://github.com/ianstormtaylor/slate/commit/5d8a16066949981ead34466af26bcb8e4ffa994b) Thanks [@hueyhe](https://github.com/hueyhe)! - Fix text not rendered on server-side rendering
+
+## 0.72.5
+
+### Patch Changes
+
+- [#4749](https://github.com/ianstormtaylor/slate/pull/4749) [`a3dfb151`](https://github.com/ianstormtaylor/slate/commit/a3dfb151d432ec67f10847997fc71b009bcf5c00) Thanks [@Jabher](https://github.com/Jabher)! - Fix "cannot resolve DOM point" error when switching between multiple errors
+
+## 0.72.4
+
+### Patch Changes
+
+- [#4753](https://github.com/ianstormtaylor/slate/pull/4753) [`e9a46ad2`](https://github.com/ianstormtaylor/slate/commit/e9a46ad29e0376a45051c4a8100c5678784b785c) Thanks [@alessiogaldy](https://github.com/alessiogaldy)! - Fix "editor.insertText never gets called inside plugins on android"
+
+* [#4779](https://github.com/ianstormtaylor/slate/pull/4779) [`345b8fc9`](https://github.com/ianstormtaylor/slate/commit/345b8fc9e8f073674c006098bd843823309db2e2) Thanks [@alessiogaldy](https://github.com/alessiogaldy)! - Android editable updates
+
+  - Remove logic to delay handling of text insertion
+  - Call Transforms.setSelection before Editor.insertText to adjust position
+
+- [#4786](https://github.com/ianstormtaylor/slate/pull/4786) [`67aa1f10`](https://github.com/ianstormtaylor/slate/commit/67aa1f10106e15486031b4103285c7fae4373056) Thanks [@alessiogaldy](https://github.com/alessiogaldy)! - - Restore logic to delay text insertion on android
+  - Always call Trasform.setSelection before calling Editor.insertText
+
+* [#4755](https://github.com/ianstormtaylor/slate/pull/4755) [`8daa77e9`](https://github.com/ianstormtaylor/slate/commit/8daa77e9fab6b222ad796b420b86f3ec88999a39) Thanks [@jhurwitz](https://github.com/jhurwitz)! - fix useFocused hook
+
+- [#4788](https://github.com/ianstormtaylor/slate/pull/4788) [`a8c08a4e`](https://github.com/ianstormtaylor/slate/commit/a8c08a4e0107bccfe972149a512643fbbfcfb9bf) Thanks [@YasinChan](https://github.com/YasinChan)! - Android merge `Editor.insertText` logic.
+
 ## 0.72.2
 
 ### Patch Changes
