@@ -44,9 +44,9 @@ export const withHistory = <T extends Editor>(editor: T) => {
     if (undos.length > 0) {
       const batch = undos[undos.length - 1]
 
-      HistoryEditor.withoutSaving(e, () => {
+      HistoryEditor.withoutSaving(e, () => { // 包在这里面不会被添加在 history 里面
         Editor.withoutNormalizing(e, () => {
-          const inverseOps = batch.map(Operation.inverse).reverse()
+          const inverseOps = batch.map(Operation.inverse).reverse() // 用于将操作性质倒转+执行顺序逆序，从而实现批量 undo
 
           for (const op of inverseOps) {
             e.apply(op)
@@ -54,7 +54,7 @@ export const withHistory = <T extends Editor>(editor: T) => {
         })
       })
 
-      history.redos.push(batch)
+      history.redos.push(batch) // 只有 undo 了才有可能添加到 redos 数组中去
       history.undos.pop()
     }
   }
@@ -62,7 +62,7 @@ export const withHistory = <T extends Editor>(editor: T) => {
   e.apply = (op: Operation) => {
     const { operations, history } = e
     const { undos } = history
-    const lastBatch = undos[undos.length - 1]
+    const lastBatch = undos[undos.length - 1] // 拿最后的一条批量操作去执行
     const lastOp = lastBatch && lastBatch[lastBatch.length - 1]
     const overwrite = shouldOverwrite(op, lastOp)
     let save = HistoryEditor.isSaving(e)
@@ -94,7 +94,7 @@ export const withHistory = <T extends Editor>(editor: T) => {
         undos.push(batch)
       }
 
-      while (undos.length > 100) {
+      while (undos.length > 100) { //最多记录 100 条操作
         undos.shift()
       }
 
