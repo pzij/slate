@@ -362,12 +362,14 @@ export const Path: PathInterface = {
 
   /**
    * Transform a path by an operation.
+   * 
+   * 不同的 op 会以不同方式更新 path
    */
 
   transform(
     path: Path | null,
     operation: Operation,
-    options: { affinity?: 'forward' | 'backward' | null } = {}
+    options: { affinity?: 'forward' | 'backward' | null } = {} // affinity: 所属，表明当前转换后 path 的归属为向前看还是向后看
   ): Path | null {
     return produce(path, p => {
       const { affinity = 'forward' } = options
