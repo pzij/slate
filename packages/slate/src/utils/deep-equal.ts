@@ -9,6 +9,8 @@ import { isPlainObject } from 'is-plain-object'
 
   Slate objects are designed to be serialised, so
   missing keys are deliberately normalised to undefined.
+
+  工具函数：深度比较 Slate 对象，仅支持基本类型、数组和内联对象。
  */
 export const isDeepEqual = (
   node: Record<string, any>,
